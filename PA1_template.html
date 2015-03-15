@@ -66,6 +66,11 @@ img {
 
 <div id="loading-and-preprocessing-the-data" class="section level2">
 <h2>Loading and preprocessing the data</h2>
+<pre class="r"><code># Load the need libraries
+
+library(&quot;dplyr&quot;);
+library(&quot;ggplot2&quot;);
+library(&quot;lattice&quot;);</code></pre>
 <pre class="r"><code>data &lt;- read.csv(&quot;activity.csv&quot;, stringsAsFactors = FALSE);
 
 # Convert the date column to the R date type

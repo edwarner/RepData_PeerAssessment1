@@ -4,6 +4,13 @@
 ## Loading and preprocessing the data
 
 
+```r
+# Load the need libraries
+
+library("dplyr");
+library("ggplot2");
+library("lattice");
+```
 
 
 ```r

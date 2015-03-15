@@ -9,7 +9,7 @@ output:
 
 ## Loading and preprocessing the data
 
-```{r include=FALSE}
+```{r warning=FALSE, message=FALSE}
 
 # Load the need libraries
 
