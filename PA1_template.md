@@ -1,26 +1,12 @@
----
-title: 'Reproducible Research: Peer Assessment 1'
-output:
-  html_document:
-    keep_md: yes
-  pdf_document: default
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
-```{r include=FALSE}
 
-# Load the need libraries
 
-library("dplyr");
-library("ggplot2");
-library("lattice");
 
-```
-
-```{r}
-
+```r
 data <- read.csv("activity.csv", stringsAsFactors = FALSE);
 
 # Convert the date column to the R date type
@@ -30,14 +16,24 @@ data$date <- as.POSIXct(data$date);
 # Show a quick summary of the data
 
 summary(data);
+```
 
+```
+##      steps             date                        interval     
+##  Min.   :  0.00   Min.   :2012-10-01 00:00:00   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.:2012-10-16 00:00:00   1st Qu.: 588.8  
+##  Median :  0.00   Median :2012-10-31 00:00:00   Median :1177.5  
+##  Mean   : 37.38   Mean   :2012-10-31 00:25:34   Mean   :1177.5  
+##  3rd Qu.: 12.00   3rd Qu.:2012-11-15 00:00:00   3rd Qu.:1766.2  
+##  Max.   :806.00   Max.   :2012-11-30 00:00:00   Max.   :2355.0  
+##  NA's   :2304
 ```
 
 
 ## What is mean total number of steps taken per day?
 
-```{r}
 
+```r
 # Create a data frame of the data grouped by date
 
 data.stepsperday <- group_by(data, date);
@@ -49,20 +45,33 @@ stepsperday <- summarize(data.stepsperday, stepsperday=sum(steps, na.rm = TRUE))
 # Create the histogram
 
 hist(stepsperday$stepsperday, main = "Total Number of Steps per Day", xlab="Steps", ylab="Frequency", col="blue");
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
+```r
 # Calculate the mean and median steps per day
 
 mean(stepsperday$stepsperday);
+```
 
+```
+## [1] 9354.23
+```
+
+```r
 median(stepsperday$stepsperday);
+```
 
+```
+## [1] 10395
 ```
 
 
 ## What is the average daily activity pattern?
 
-```{r}
 
+```r
 # Group the data by steps per interval
 
 data.stepsperinterval <- group_by(data, interval);
@@ -78,21 +87,34 @@ ggplot(data=stepsperinterval, aes(x=interval, y=stepsperinterval)) +
   xlab("5-Minute Interval") +
   ylab("Average Steps") +
   ggtitle("Average Number of Steps per 5 Minute Interval (Averaged across all days)");
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
+```r
 # Calculate the 5 minute interval with the highest average steps
 
 stepsperinterval$interval[which.max(stepsperinterval$stepsperinterval)];
+```
 
+```
+## [1] 835
 ```
 
 ## Imputing missing values
 
-```{r}
 
+```r
 # Calculate the number of NAs in the data
 
 sum(is.na(data));
+```
 
+```
+## [1] 2304
+```
+
+```r
 # Create an imputed value based on the mean per interval
 
 imputedvalues <- numeric();
@@ -132,21 +154,34 @@ stepsperdayimputed <- summarize(data.stepsperdayimputed, stepsperday=sum(steps, 
 # Create the histogram
 
 hist(stepsperdayimputed$stepsperday, main = "Total Number of Steps per Day - Imputed NAs", xlab="Steps", ylab="Frequency", col="green");
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+
+```r
 # Calculate the mean and median steps per day for the data with imputed NA values
 
 mean(stepsperdayimputed$stepsperday);
+```
 
+```
+## [1] 10766.19
+```
+
+```r
 median(stepsperdayimputed$stepsperday);
+```
 
+```
+## [1] 10766.19
 ```
 
 Imputing the NA values of steps appears to make the steps per day histogram look significantly more normally distributed.  The mean increases significantly while the median increases but to a lesser degree.  Also, after imputing, the mean and median are almost exactly the same, suggesting the data is now less skewed.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r}
 
+```r
 # Calculate the day of week value for each day in the data
 
 dayofweek <- weekdays(data.imputedvalues$date);
@@ -179,7 +214,8 @@ stepsperintervalimputeddaytype <- summarize(data.stepsperintervalimputed, stepsp
 # Create a panel plot of the Weekend and Weekdays average steps per five minute interval
 
 xyplot(stepsperinterval ~ interval | daytype, stepsperintervalimputeddaytype, type = "l", layout = c(1, 2), xlab = "5-Minute Interval", ylab = "Number of Steps");
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
 
 It appears from the panel plot above that on weekdays the highest steps per interval occur early and late in the day.  However, on the weekends, the steps per day tend to be more consistent throughout the daywith the peaks being more frequently throughout the midday.
