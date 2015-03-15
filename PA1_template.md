@@ -5,7 +5,7 @@
 
 
 ```r
-# Load the need libraries
+# Load the neccesary libraries
 
 library("dplyr");
 library("ggplot2");
@@ -225,4 +225,4 @@ xyplot(stepsperinterval ~ interval | daytype, stepsperintervalimputeddaytype, ty
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
 
-It appears from the panel plot above that on weekdays the highest steps per interval occur early and late in the day.  However, on the weekends, the steps per day tend to be more consistent throughout the daywith the peaks being more frequently throughout the midday.
+It appears from the panel plot above that on weekdays the highest steps per interval occur early and late in the day.  However, on the weekends, the steps per day tend to be more consistent throughout the day with the peaks being more frequently throughout the midday.
